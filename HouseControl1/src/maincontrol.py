@@ -20,16 +20,14 @@ class MainControl(wx.App):
 
     def OnInit(self): 
          # where on the screen we have the frame
-        self.winsize = (800,600) #size of the window
-        self.CalculatePosition()
+
         
-        self.frame = wx.Frame(parent=None,id=-1,title= "House control",size=self.winsize,pos = self.winpos)
+        self.frame = wx.Frame(parent=None,id=-1,title= "House control")
         print " id of frame",self.frame.GetId()
 
         
         
  
-        self.frame.Show()
         # make this the topwindow
         self.SetTopWindow(self.frame)
         print "I am in OnInit"
@@ -46,13 +44,36 @@ class MainControl(wx.App):
         # since wx python uses y direction as measured from the top we need to calculate
         # the positions such that the lower edge of the frame is still on the screen
         ypos = height-self.winsize[1]
-        self.winpos =(50,ypos)
+        self.winpos =(self.xpos,ypos)
+        return
+ 
+    def SizeFrame(self,x,y):
+        """ sets the window size
+        """
+        
+        self.winsize = (x,y) #size of the window
+        
+
+        
+
+        self.frame.SetSize(self.winsize)
+        self.CalculatePosition()
+        self.frame.SetPosition(self.winpos)
+
+        self.frame.Show()
+        return
+
+    def SetPosition(self,left_bottom):
+        """
+        serts the position of the lower left corner
+        """
+        
+        self.xpos = left_bottom
         return
         
-        
-
-
 if __name__ == '__main__':
     MC= MainControl(redirect=False) # this redirects out put into a wx python window.
+    MC.SetPosition(20)  # sets the left corner in x
+    MC.SizeFrame(x=900,y=700) #sizes the frame
     MC.MainLoop()
     pass
