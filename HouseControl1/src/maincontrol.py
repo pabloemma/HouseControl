@@ -19,7 +19,7 @@ class MainControl(wx.App):
         wx.App.__init__(self,redirect)
 
     def OnInit(self): 
-         # where on the screen we have the frame
+        # where on the screen we have the frame
 
         
         self.frame = wx.Frame(parent=None,id=-1,title= "House control")
@@ -51,14 +51,15 @@ class MainControl(wx.App):
         """ sets the window size
         """
         
+        
         self.winsize = (x,y) #size of the window
         
 
         
 
-        self.frame.SetSize(self.winsize)
-        self.CalculatePosition()
-        self.frame.SetPosition(self.winpos)
+        self.frame.SetSize(self.winsize) # here we set the frame sizer
+        self.CalculatePosition() #calulate the possible position
+        self.frame.SetPosition(self.winpos) #set the position
 
         self.frame.Show()
         return
