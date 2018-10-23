@@ -14,6 +14,8 @@ class MainFrame(wx.Frame):
         Not much doing here
         """
         wx.Frame.__init__(self, *args, **kwargs)
+        self.panel = wx.Panel(self,-1)
+        
         self.Show()
         
         
