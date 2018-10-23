@@ -57,8 +57,8 @@ class MainFrame(wx.Frame):
 
 if __name__ == '__main__':
     
-    app= wx.App()
-    MC= MainFrame(None) # this redirects out put into a wx python window.
+    app= wx.App(redirect=True)
+    MC= MainFrame(None,title='my test') # this redirects out put into a wx python window.
     MC.SetPosition(50)  # sets the left corner in x
     MC.SizeFrame(x=600,y=600) #sizes the frame
     app.MainLoop()
