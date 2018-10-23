@@ -1,5 +1,5 @@
 '''
-Created on Oct 18, 2018
+Created on Oct 23, 2018
 
 @author: klein
 '''
@@ -7,33 +7,16 @@ Created on Oct 18, 2018
 import wx
 import os
 
+class MainFrame(wx.Frame):
 
-class MainFrame(wx.App):
-
-    def __init__ (self,redirect=False, filename = None):
+    def __init__ (self,*args, **kwargs):
         """
         Not much doing here
         """
-    
-    # next statement intializes and is needed for wx to provide the OnInit
-        wx.App.__init__(self,redirect)
-
-    def OnInit(self): 
-        # where on the screen we have the frame
-
-        
-        self.frame = wx.Frame(parent=None,id=-1,title= "House control")
-        print " id of frame",self.frame.GetId()
-
+        wx.Frame.__init__(self, *args, **kwargs)
+        self.Show()
         
         
- 
-        # make this the topwindow
-        self.SetTopWindow(self.frame)
-        print "I am in OnInit"
-        # temporarya dialog
-        return True
-
     def CalculatePosition(self):
         """calculates the position of the window
         Currently I want to have it in the lower left corner
@@ -57,11 +40,11 @@ class MainFrame(wx.App):
 
         
 
-        self.frame.SetSize(self.winsize) # here we set the frame sizer
+        self.SetSize(self.winsize) # here we set the frame sizer
         self.CalculatePosition() #calulate the possible position
-        self.frame.SetPosition(self.winpos) #set the position
+        self.SetPosition(self.winpos) #set the position
 
-        self.frame.Show()
+        self.Show()
         return
 
     def SetPosition(self,left_bottom):
@@ -71,10 +54,12 @@ class MainFrame(wx.App):
         
         self.xpos = left_bottom
         return
-        
+
 if __name__ == '__main__':
-    MC= MainFrame(redirect=False) # this redirects out put into a wx python window.
-    MC.SetPosition(20)  # sets the left corner in x
-    MC.SizeFrame(x=900,y=700) #sizes the frame
-    MC.MainLoop()
+    
+    app= wx.App()
+    MC= MainFrame(None) # this redirects out put into a wx python window.
+    MC.SetPosition(50)  # sets the left corner in x
+    MC.SizeFrame(x=600,y=600) #sizes the frame
+    app.MainLoop()
     pass
