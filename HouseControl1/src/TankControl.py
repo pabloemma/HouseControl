@@ -10,6 +10,8 @@ import wx
 import MainFrame 
 import socket, errno
 import subprocess
+import threading
+
 
 
 
@@ -25,12 +27,15 @@ class TankControl(object):
     '''
 
 
-    def __init__(self,port=5478):
+    def __init__(self,port=5478,IP1='192.168.10.60',IP2='192.168.10.61'):
         '''
         Constructor
         '''
         self.port = port # currently we are always using 5478
+
+        self.IP1 = IP1 # the ip addresses of the wto level parsperry pis
         
+        self.IP2 = IP2
         
         
         
@@ -138,25 +143,51 @@ class TankControl(object):
         if not self.PortInUse():
             print " we are good to go"
         else:
-            print "the port is already in use"
+            print "the port is alserv.listen()ready in use"
             print " I will try to kill the process"
             self.KillPortProcess()
             
             # now we can start the program
+            #This needs to go into a thread
         
         self.serv = serv = DE.ThreadedServer('',5478)
         serv.OpenFile()
-        serv.listen()
+        #here we do a thread
+
+        t1 = threading.Thread(target=serv.listen, args=[])
+        t1.start()
+        # now we need to start the rocesses on the tank machines
+        # make sure we have a key generated and pushed to the machines
+        # see for example http://www.linuxproblem.org/art_9.html
+        # we have two machines
         
+        print "now starting first machine @",self.IP1
+        
+        t2 = threading.Thread(target=self.ConnectLevelRaspi(self.IP1), args=[])
+        t2.start()
+
+        print "now starting next machine @",self.IP2
+
+        t3 = threading.Thread(target=self.ConnectLevelRaspi(self.IP2), args=[])
+        t3.start()
         
         
         return
+
+        
+    def ConnectLevelRaspi(self,IP): 
+        
+        
+        #command_IP1 = 'ssh pi@'+ IP +' -t -t \'screen -D -RR -S this python /home/pi/tank/tank/src/tanklevel.py \' '  
+        command_IP1 = 'ssh pi@'+ IP +' \'nohup python /home/pi/tank/tank/src/tanklevel.py  >/dev/null 2>/dev/null </dev/null \' '            
+        subprocess.call(command_IP1, shell=True)
+
  
 if __name__ == '__main__':
     
     app= wx.App(redirect=False)
 
-    TC=TankControl(port=5478)
+    TC=TankControl(port=5478,IP1='192.168.10.60',IP2='192.168.10.61')
     app.MainLoop()
     pass
        
