@@ -10,6 +10,7 @@ import wx
 import MainFrame 
 import socket, errno
 import subprocess
+import sleep
 
 
 
@@ -111,6 +112,7 @@ class TankControl(object):
         command = 'fuser -k ' +str(self.port)+'/tcp'
         print command
         subprocess.call(command, shell=True)
+        time.sleep(10)
         pass
 
     
