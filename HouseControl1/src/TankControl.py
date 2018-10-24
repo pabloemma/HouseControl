@@ -11,12 +11,11 @@ import MainFrame
 import socket, errno
 import subprocess
 
-import sys
-sys.path.insert(0, "/home/klein/git/tank/tank/src")
+
 
 import imp
 
-DE = imp.load_source('ThreadedServer', '~/git/tank/tank/src/data_exchange_threaded.py')
+DE = imp.load_source('ThreadedServer', '/home/klein/git/tank/tank/src/data_exchange_threaded.py')
 
 
 
