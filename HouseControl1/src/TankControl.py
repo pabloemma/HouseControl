@@ -110,7 +110,7 @@ class TankControl(object):
 
         command = 'fuser -k ' +str(self.port)+'/tcp'
         print command
-        subprocess.call(command)
+        subprocess.call(command, shell=True)
         pass
 
     
