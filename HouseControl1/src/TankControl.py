@@ -12,7 +12,7 @@ import socket, errno
 import subprocess
 
 import sys
-sys.path.insert(0, "~/git/tank/tank/src")
+sys.path.insert(0, "/home/klein/git/tank/tank/src")
 
 import imp
 
