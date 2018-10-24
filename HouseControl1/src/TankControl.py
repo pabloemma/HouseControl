@@ -108,7 +108,8 @@ class TankControl(object):
         
     def KillPortProcess(self):
 
-        command = 'sudo fuser -k ' +str(self.port)+'/tcp'
+        command = 'fuser -k ' +str(self.port)+'/tcp'
+        print command
         subprocess.call(command)
         pass
 
