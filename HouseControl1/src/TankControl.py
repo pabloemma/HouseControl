@@ -19,10 +19,37 @@ class TankControl(object):
         '''
         Constructor
         '''
-        MC=MainFrame.MainFrame(None,title = "test") # this redirects out put into a wx python window.
+        self.MC=MC=MainFrame.MainFrame(None,title = "test") # this redirects out put into a wx python window.
         MC.SetPosition(50)  # sets the left corner in x
         MC.SizeFrame(x=600,y=600) #sizes the frame
-        button=wx.Button(MC.panel,-1,"Close me",pos=(15,15))
+        self.CreateButton()
+ 
+        #Now we start beautify the frame.
+ 
+        self.CreateMenu()
+        
+    def CreateMenu(self):
+        """ this creates the menu for the tankcontrol
+        """
+        self.menubar = wx.MenuBar()
+        # first menu
+        menu1 = wx.Menu()
+        menu1.Append(wx.NewId(),"&Quit") # this creates the menu items
+        self.menubar.Append(menu1, "&File") # this creates the menu title
+        
+        
+        menu2 = wx.Menu()
+        menu2.Append(wx.NewId(),"&Run")
+        self.menubar.Append(menu2, "&Control") # this creates the menu title
+        
+ 
+        self.MC.SetMenuBar(self.menubar)
+        
+        
+    def CreateButton(self): 
+        
+           
+        button=wx.Button(self.MC.panel,-1,"Close me",pos=(15,15))
 
 
   
