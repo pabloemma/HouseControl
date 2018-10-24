@@ -56,6 +56,9 @@ class MainFrame(wx.Frame):
         
         self.xpos = left_bottom
         return
+    
+    def CloseFrame(self):
+        self.Close()
 
 if __name__ == '__main__':
     
