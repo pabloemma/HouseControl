@@ -13,7 +13,10 @@ import subprocess
 
 import sys
 sys.path.insert(0, "~/git/tank/tank/src")
-import data_exchange_threaded as DE
+
+import imp
+
+DE = imp.load_source('ThreadedServer', '~/git/tank/tank/src/data_exchange_threaded.py')
 
 
 
