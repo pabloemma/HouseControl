@@ -179,8 +179,9 @@ class TankControl(object):
         
         
         #command_IP1 = 'ssh pi@'+ IP +' -t -t \'screen -D -RR -S this python /home/pi/tank/tank/src/tanklevel.py \' '  
-        command_IP1 = 'ssh pi@'+ IP +' \'nohup python /home/pi/tank/tank/src/tanklevel.py  >/dev/null 2>/dev/null </dev/null \' '            
+        command_IP1 = 'ssh pi@'+ IP +' \'nohup python /home/pi/tank/tank/src/tanklevel.py  >/dev/null 2>/dev/null </dev/null & \' '            
         subprocess.call(command_IP1, shell=True)
+        return
 
  
 if __name__ == '__main__':
