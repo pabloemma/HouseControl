@@ -11,6 +11,7 @@ import MainFrame
 import socket, errno
 import subprocess
 import threading
+import os
 
 
 
@@ -41,7 +42,7 @@ class TankControl(object):
         
         
         self.MC=MC=MainFrame.MainFrame(None,title = "test") # this redirects out put into a wx python window.
-        MC.SetPosition(50)  # sets the left corner in x
+        MC.SetPosition(500)  # sets the left corner in x
         MC.SizeFrame(x=600,y=600) #sizes the frame
         self.CreateButton()
  
@@ -67,6 +68,8 @@ class TankControl(object):
         
         menu2 = wx.Menu()
         Run = menu2.Append(wx.NewId(),"&Run")
+        Plot = menu2.Append(wx.NewId(),"&Plot Level today")
+        Plot1 = menu2.Append(wx.NewId(),"&Plot Level for specific date")
         Control = self.menubar.Append(menu2, "&Control") # this creates the menu title
         
  
@@ -80,12 +83,14 @@ class TankControl(object):
         
         # from Control menue
         self.MC.Bind(wx.EVT_MENU,self.OnRun,Run)
-        
+        self.MC.Bind(wx.EVT_MENU,self.OnPlot,Plot)
+        self.MC.Bind(wx.EVT_MENU,self.OnPlot1,Plot1)
+       
         
         
     def CreateButton(self): 
         
-           
+
         button=wx.Button(self.MC.panel,-1,"Close me",pos=(15,15))
 
 
@@ -112,16 +117,47 @@ class TankControl(object):
         s.close()
         
     def KillPortProcess(self):
+        """ this function kills any process which uses our port
+        """
 
         command = 'fuser -k ' +str(self.port)+'/tcp'
         print command
         subprocess.call(command, shell=True)
         pass
 
-    
+
+    def ConnectLevelRaspi(self,IP): 
+        """ 
+        creates the command for multi threading
+        """
+
+        
+        #command_IP1 = 'ssh pi@'+ IP +' -t -t \'screen -D -RR -S this python /home/pi/tank/tank/src/tanklevel.py \' '  
+        command_IP1 = 'ssh pi@'+ IP +' \'nohup python /home/pi/tank/tank/src/tanklevel.py  >/dev/null 2>/dev/null </dev/null & \' '            
+        subprocess.call(command_IP1, shell=True)
+        return
+   
     
     
     #here come all the event handling routines
+    
+    def OnPlot(self,event):
+        """
+        Here we call the plot_level routine
+        """
+        os.system("python ~/git/tank/tank/src/plot_level.py")
+
+    def OnPlot1(self,event):
+        """
+        Here we call the plot_level routine with first asking for a date
+        """
+        dlg = wx.TextEntryDialog(None,"give date in format yyyy-mm-dd ",'Date')
+        if dlg.ShowModal() == wx.ID_OK:
+            date = dlg.GetValue()
+            command = "python ~/git/tank/tank/src/plot_level.py "+str(date)
+        
+        os.system(command)
+    
     
     def OnQuit(self,event):
         """
@@ -175,13 +211,6 @@ class TankControl(object):
         return
 
         
-    def ConnectLevelRaspi(self,IP): 
-        
-        
-        #command_IP1 = 'ssh pi@'+ IP +' -t -t \'screen -D -RR -S this python /home/pi/tank/tank/src/tanklevel.py \' '  
-        command_IP1 = 'ssh pi@'+ IP +' \'nohup python /home/pi/tank/tank/src/tanklevel.py  >/dev/null 2>/dev/null </dev/null & \' '            
-        subprocess.call(command_IP1, shell=True)
-        return
 
  
 if __name__ == '__main__':
