@@ -186,7 +186,7 @@ class TankControl(object):
  
 if __name__ == '__main__':
     
-    app= wx.App(redirect=False)
+    app= wx.App(redirect=True)
 
     TC=TankControl(port=5478,IP1='192.168.10.60',IP2='192.168.10.61')
     app.MainLoop()
