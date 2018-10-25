@@ -168,15 +168,20 @@ class TankControl(object):
         """
         dlg = wx.FileDialog(None,"Choose files",'~/tankfiles',"","",wx.OPEN | wx.MULTIPLE)
         if dlg.ShowModal() == wx.ID_OK:
+#            filelist = dlg.GetFilenames()
             filelist = dlg.GetPaths()
+            
             
         dlg.Destroy()
         # in order to plot all the files we need to concatenate them into one long file
         f = open("/home/klein/tankfiles/1900-01-01tank.csv","w")
-        print filelist
+        print filelist[1]
         for temp in filelist:
-            f.write(temp.read())
-        command = "python ~/git/tank/tank/src/plot_level.py "+str(1900-01-01)
+            print type(temp)
+            a = open(str(temp))
+            f.write(a.read())
+            #a.Close()
+        command = "python ~/git/tank/tank/src/plot_level.py "+str('1900-01-01')
         os.system(command)
 
         
