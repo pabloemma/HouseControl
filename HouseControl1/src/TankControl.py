@@ -44,11 +44,11 @@ class TankControl(object):
         self.MC=MC=MainFrame.MainFrame(None,title = "test") # this redirects out put into a wx python window.
         MC.SetFramePosition(500)  # sets the left corner in x
         MC.SizeFrame(x=600,y=600) #sizes the frame
-        self.CreateButton()
  
         #Now we start beautify the frame.
  
         self.CreateMenu()
+        self.CreateButton()
         
         
         
@@ -91,7 +91,9 @@ class TankControl(object):
     def CreateButton(self): 
         
 
-        button=wx.Button(self.MC.panel,-1,"Close me",pos=(15,15))
+        MyButton=wx.Button(self.MC.panel,-1,"Close me",pos=(15,15))
+        self.MC.Bind(wx.EVT_BUTTON,self.OnQuit,MyButton)
+      
 
 
 
