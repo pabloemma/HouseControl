@@ -70,6 +70,7 @@ class TankControl(object):
         Run = menu2.Append(wx.NewId(),"&Run")
         Plot = menu2.Append(wx.NewId(),"&Plot Level today")
         Plot1 = menu2.Append(wx.NewId(),"&Plot Level for specific date")
+        Plot2 = menu2.Append(wx.NewId(),"&Plot many files")
         Control = self.menubar.Append(menu2, "&Control") # this creates the menu title
         
  
@@ -85,6 +86,7 @@ class TankControl(object):
         self.MC.Bind(wx.EVT_MENU,self.OnRun,Run)
         self.MC.Bind(wx.EVT_MENU,self.OnPlot,Plot)
         self.MC.Bind(wx.EVT_MENU,self.OnPlot1,Plot1)
+        self.MC.Bind(wx.EVT_MENU,self.OnPlot2,Plot2)
        
         
         
@@ -159,6 +161,16 @@ class TankControl(object):
             command = "python ~/git/tank/tank/src/plot_level.py "+str(date)
         
         os.system(command)
+    
+    def OnPlot2(self,event):
+        """
+        Plots many days
+        """
+        dlg = wx.FileDialog(None,"Choose files",'~/tankfiles',"","",wx.OPEN)
+        if dlg.ShowModal() == wx.ID_OK:
+            print dlg.GetPath()
+            
+        dlg.Destroy()
     
     
     def OnQuit(self,event):
