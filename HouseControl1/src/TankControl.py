@@ -42,7 +42,7 @@ class TankControl(object):
         
         
         self.MC=MC=MainFrame.MainFrame(None,title = "test") # this redirects out put into a wx python window.
-        MC.SetPosition(500)  # sets the left corner in x
+        MC.SetFramePosition(500)  # sets the left corner in x
         MC.SizeFrame(x=600,y=600) #sizes the frame
         self.CreateButton()
  

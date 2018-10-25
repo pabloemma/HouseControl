@@ -28,8 +28,8 @@ class MainFrame(wx.Frame):
         
         # since wx python uses y direction as measured from the top we need to calculate
         # the positions such that the lower edge of the frame is still on the screen
-        self.ypos = height-self.winsize[1]
-        print self.xpos
+        self.ypos = height-2*self.winsize[1]+15
+        
         self.winpos =(self.xpos,self.ypos)
         return
  
@@ -50,7 +50,7 @@ class MainFrame(wx.Frame):
         self.Show()
         return
 
-    def SetPosition(self,left_bottom):
+    def SetFramePosition(self,left_bottom):
         """
         serts the position of the lower left corner
         """
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     
     app= wx.App(redirect=False)
     MC= MainFrame(None,title='my test') # this redirects out put into a wx python window.
-    MC.SetPosition(500)  # sets the left corner in x
+    MC.SetFramePosition(500)  # sets the left corner in x
     MC.SizeFrame(x=600,y=600) #sizes the frame
     app.MainLoop()
     pass
