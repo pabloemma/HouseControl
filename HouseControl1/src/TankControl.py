@@ -13,10 +13,16 @@ import subprocess
 import threading
 import os
 
+import matplotlib
+matplotlib.use('WXAgg')
+
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.backends.backend_wx import NavigationToolbar2Wx
+from matplotlib.figure import Figure
 
 
 import imp
-
+import PlotTankLevel
 DE = imp.load_source('ThreadedServer', '/home/klein/git/tank/tank/src/data_exchange_threaded.py')
 
 
@@ -70,6 +76,7 @@ class TankControl(object):
         Plot = menu2.Append(wx.NewId(),"&Plot Level today")
         Plot1 = menu2.Append(wx.NewId(),"&Plot Level for specific date")
         Plot2 = menu2.Append(wx.NewId(),"&Plot many files")
+        PlotCanvas = menu2.Append(wx.NewId(),"&Plot on Canvas")
         Control = self.menubar.Append(menu2, "&Control") # this creates the menu title
         
  
@@ -86,6 +93,7 @@ class TankControl(object):
         self.MC.Bind(wx.EVT_MENU,self.OnPlot,Plot)
         self.MC.Bind(wx.EVT_MENU,self.OnPlot1,Plot1)
         self.MC.Bind(wx.EVT_MENU,self.OnPlot2,Plot2)
+        self.MC.Bind(wx.EVT_MENU,self.OnPlotCanvas,PlotCanvas)
        
         
         
@@ -188,7 +196,10 @@ class TankControl(object):
         """
          This will plot the tank results in the panel. Hopefully
         """ 
-    
+        plotme = PlotTankLevel.PlotTankLevel(mydate = 'today')
+        plotme.FillData()
+        plotme.PlotData()
+
     
     def OnQuit(self,event):
         """
