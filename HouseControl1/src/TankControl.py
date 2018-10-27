@@ -15,7 +15,6 @@ import os
 
 
 
-
 import imp
 
 DE = imp.load_source('ThreadedServer', '/home/klein/git/tank/tank/src/data_exchange_threaded.py')
@@ -127,6 +126,7 @@ class TankControl(object):
         command = 'fuser -k ' +str(self.port)+'/tcp'
         print command
         subprocess.call(command, shell=True)
+        time.sleep(10)
         pass
 
 
