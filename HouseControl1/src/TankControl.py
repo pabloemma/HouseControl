@@ -184,7 +184,10 @@ class TankControl(object):
         command = "python ~/git/tank/tank/src/plot_level.py "+str('1900-01-01')
         os.system(command)
 
-        
+    def OnPlotCanvas(self,event):   
+        """
+         This will plot the tank results in the panel. Hopefully
+        """ 
     
     
     def OnQuit(self,event):
@@ -243,7 +246,7 @@ class TankControl(object):
  
 if __name__ == '__main__':
     
-    app= wx.App(redirect=True)
+    app= wx.App(redirect=False)
 
     TC=TankControl(port=5478,IP1='192.168.10.60',IP2='192.168.10.61')
     app.MainLoop()
