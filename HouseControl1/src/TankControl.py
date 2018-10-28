@@ -12,6 +12,7 @@ import socket, errno
 import subprocess
 import threading
 import os
+import time
 
 import matplotlib
 matplotlib.use('WXAgg')
@@ -256,7 +257,10 @@ class TankControl(object):
         
         t2 = threading.Thread(target=self.ConnectLevelRaspi(self.IP1), args=[])
         t2.start()
-
+        # sleep for 2 seconds so they don't have the same time
+        #trying o understand the out of range index problem
+        
+        time.sleep(2)
         print "now starting next machine @",self.IP2
 
         t3 = threading.Thread(target=self.ConnectLevelRaspi(self.IP2), args=[])
