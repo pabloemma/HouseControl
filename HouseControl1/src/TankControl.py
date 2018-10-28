@@ -196,8 +196,21 @@ class TankControl(object):
         """
          This will plot the tank results in the panel. Hopefully
         """ 
+        return # need to get rest working first
         plotme = PlotTankLevel.PlotTankLevel(mydate = 'today')
         plotme.FillData()
+        # create panel
+        fr = wx.Frame(None, title='new canvas')
+        panel = wx.Panel(fr)
+        #Try to plot in the canvas
+        self.figure = Figure()
+        self.canvas = FigureCanvas(self, -1, self.figure)
+ 
+        self.sizer = wx.BoxSizer(wx.VERTICAL) 
+        self.sizer.Add(self.canvas, 1, wx.LEFT | wx.TOP | wx.GROW)
+        self.Fit()
+        
+        
         plotme.PlotData()
 
     
